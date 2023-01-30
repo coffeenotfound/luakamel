@@ -268,7 +268,7 @@ module Ast = struct
 		or
 	*)
 	
-	(** Generic template for binary exprs (NOTE: VERY SLOW)*)
+	(** Generic template for binary exprs *)
 	let rec parse_expr_binary_ltr (next_prec: expr Parse.parse_fn) (op_parse: expr_bin_op Parse.parse_fn) (ctx: Parse.Ctx.t) : expr option =
 		(*Debug:
 		let _ = print_endline "try parse ltr" in*)
