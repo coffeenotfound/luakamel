@@ -269,22 +269,7 @@ module Ast = struct
 	*)
 	
 	(** Generic template for binary exprs (NOTE: VERY SLOW)*)
-	let rec parse_expr_binary_ltr_old (next_prec: expr Parse.parse_fn) (op_parse: expr_bin_op Parse.parse_fn) (ctx: Parse.Ctx.t) : expr option =
-		(* TODO: Implement recursively parsing the same prec e.g. `a + b + c` -> `((a + b) + c)` *)
-		let open Parse
-		in let p = (next_prec)
-			>>= (op_parse)
-			>>= (next_prec)
-			|> rewind_on_fail
-		in any [
-			(fun ctx -> match (p ctx) with
-				| None -> None
-				| Some ((left, op), right) -> Some (ExprBinary {left; op; right})
-			);
-			next_prec;
-		] ctx
-	
-	and parse_expr_binary_ltr (next_prec: expr Parse.parse_fn) (op_parse: expr_bin_op Parse.parse_fn) (ctx: Parse.Ctx.t) : expr option =
+	let rec parse_expr_binary_ltr (next_prec: expr Parse.parse_fn) (op_parse: expr_bin_op Parse.parse_fn) (ctx: Parse.Ctx.t) : expr option =
 		(*Debug:
 		let _ = print_endline "try parse ltr" in*)
 		let open Parse
